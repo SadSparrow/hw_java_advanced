@@ -1,15 +1,13 @@
 package org.sparrow.tasks.three.sweets;
 
 import java.util.Objects;
-import java.util.UUID;
 
-public class Sweet {
-    private final String name;
-    private final double weight;
-    private final double price;
-    private final String uuid;
+public abstract class AbstractSweet {
+    protected final String name;
+    protected final double weight;
+    protected final double price;
 
-    public Sweet(String name, double weight, double price) {
+    protected AbstractSweet(String name, double weight, double price) {
         Objects.requireNonNull(name);
         if (weight <= 0 || price <= 0) {
             throw new IllegalArgumentException("Цена/вес должны быть больше нуля");
@@ -17,7 +15,10 @@ public class Sweet {
         this.name = name;
         this.weight = weight;
         this.price = price;
-        this.uuid = UUID.randomUUID().toString();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public double getWeight() {
@@ -33,11 +34,11 @@ public class Sweet {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Sweet sweet = (Sweet) o;
+        AbstractSweet that = (AbstractSweet) o;
 
-        if (Double.compare(sweet.weight, weight) != 0) return false;
-        if (Double.compare(sweet.price, price) != 0) return false;
-        return name.equals(sweet.name);
+        if (Double.compare(that.weight, weight) != 0) return false;
+        if (Double.compare(that.price, price) != 0) return false;
+        return name.equals(that.name);
     }
 
     @Override
@@ -54,6 +55,6 @@ public class Sweet {
 
     @Override
     public String toString() {
-        return String.format("{%s (uuid: %s)%nweight: %.2f, price: %.2f}", name, uuid, weight, price);
+        return String.format("name: %s%nweight: %.2f, price: %.2f", name, weight, price);
     }
 }
