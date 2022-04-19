@@ -1,19 +1,24 @@
 package org.sparrow.tasks.four_six.model;
 
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class AbstractCalculator implements Calculator {
     protected static final Logger LOG = Logger.getLogger(AbstractCalculator.class.getName());
     protected static final String ERROR_MSG = "No calculations were made yet";
+    protected Double firstOperand = null;
+    protected Double secondOperand = null;
+    protected Operation operation = null;
 
     @Override
     public double makeCalculation(double firstOperand, double secondOperand, Operation operation) {
+        this.firstOperand = firstOperand;
+        this.secondOperand = secondOperand;
+        this.operation = operation;
+
         double result;
         switch (operation) {
             case ADD -> {
-//                LOG.info(String.format("operand %s is added to operand %s", secondOperand, firstOperand));
                 LOG.log(Level.INFO, "operand {0} is added to operand {1}", new Object[]{secondOperand, firstOperand});
                 result = firstOperand + secondOperand;
             }
@@ -42,9 +47,33 @@ public abstract class AbstractCalculator implements Calculator {
         return result;
     }
 
+    public Double getFirstOperand() {
+        LOG.log(Level.INFO, "get the value of the first operand: {0}", firstOperand);
+        if (firstOperand == null) {
+            System.out.println(ERROR_MSG);
+        }
+        return firstOperand;
+    }
+
+    public Double getSecondOperand() {
+        LOG.log(Level.INFO, "get the value of the second operand: {0}", secondOperand);
+        if (secondOperand == null) {
+            System.out.println(ERROR_MSG);
+        }
+        return secondOperand;
+    }
+
+    public Operation getOperation() {
+        LOG.log(Level.INFO, "get the value of the operation: {0}", operation);
+        if (operation == null) {
+            System.out.println(ERROR_MSG);
+        }
+        return operation;
+    }
+
     protected abstract void saveResult(double result);
 
     protected String formatResult(double result) {
-        return String.format(Locale.FRANCE, "%,.2f", result);
+        return String.format("Результат вычисления: %.4f", result);
     }
 }

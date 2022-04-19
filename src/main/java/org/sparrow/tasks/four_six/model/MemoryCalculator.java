@@ -30,6 +30,9 @@ public class MemoryCalculator extends AbstractCalculator {
         LOG.info("clear all results");
         results.clear();
         results.trimToSize();
+        super.firstOperand = null;
+        super.secondOperand = null;
+        super.operation = null;
     }
 
     @Override
